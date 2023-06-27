@@ -1,6 +1,8 @@
+import Navbar from "@/components/Navbar/Navbar";
 import "./globals.css";
 
 import { Inter, Nunito } from "next/font/google";
+import RegisterModal from "@/components/modals/RegisterModal";
 
 const inter = Inter({ subsets: ["latin"] });
 const font = Nunito({
@@ -18,7 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={font.className + "h-screen"}>{children}</body>
+      <body className={font.className + "h-screen"}>
+        <RegisterModal />
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
