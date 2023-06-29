@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter, Nunito } from "next/font/google";
 import RegisterModal from "@/components/modals/RegisterModal";
 import ToasterProvider from "@/providers/ToasterProvider";
+import LoginModal from "@/components/modals/LoginModal";
 
 const inter = Inter({ subsets: ["latin"] });
 const font = Nunito({
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={font.className + "h-screen"}>
         <ToasterProvider />
         <RegisterModal />
+        <LoginModal />
         <Navbar />
         {children}
       </body>

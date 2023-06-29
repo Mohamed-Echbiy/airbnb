@@ -20,20 +20,23 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { lable: "email", type: "text" },
-        password: { lable: "password", type: "password" },
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (credentials?.email || credentials?.password) {
+        console.log(credentials);
+        if (!credentials?.email || !credentials?.password) {
+          console.log("the password and email are not provided");
           throw new Error("Invalid Credentials");
         }
 
-        const user = await prisma?.user.findUnique({
+        const user = await client?.user.findUnique({
           where: {
             email: credentials?.email,
           },
         });
-        if (!user || user?.hashedPassword) {
+        if (!user || !user?.hashedPassword) {
+          console.log("the password is not passed");
           throw new Error("Invalid Credentials");
         }
 
@@ -42,12 +45,17 @@ export const authOptions: AuthOptions = {
           user?.hashedPassword &&
           (await bcrypt.compare(credentials?.password, user?.hashedPassword));
         if (!isCorrectPass) {
+          console.log("the password is not correct");
+
           throw Error("Invalid Credentials");
         }
-        return null;
+        console.log("the user should be logged here");
+        // note returning a null here will cause an error
+        return user;
       },
     }),
   ],
+
   pages: {
     signIn: "/",
   },
