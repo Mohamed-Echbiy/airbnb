@@ -5,7 +5,14 @@ import { useState } from "react";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
-const UserMenue = () => {
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
+
+interface UserMenuProps {
+  currentUser?: User | null;
+}
+
+const UserMenue: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [open, setIsOpen] = useState<boolean>(false);
@@ -34,10 +41,37 @@ const UserMenue = () => {
       {open && (
         <div className='absolute rounded-xl shadow-md w-[40vw] max-w-[180px]  bg-white overflow-hidden right-0 md:right-28 top-20 text-sm'>
           <div className=' flex cursor-pointer flex-col '>
-            <>
-              <MenuItem onClick={() => loginModal.onOpen()} lable='Login' />
-              <MenuItem onClick={() => registerModal.onOpen()} lable='Signup' />
-            </>
+            {currentUser ? (
+              <>
+                <MenuItem onClick={() => console.log("")} lable='My trips' />
+                <MenuItem
+                  onClick={() => console.log("")}
+                  lable='My Favorites'
+                />
+                <MenuItem
+                  onClick={() => console.log("")}
+                  lable='My Reservations'
+                />
+                <MenuItem
+                  onClick={() => console.log("")}
+                  lable='My Properties'
+                />
+                <MenuItem
+                  onClick={() => console.log("")}
+                  lable='Airbnb My Home'
+                />
+                <hr />
+                <MenuItem onClick={() => signOut()} lable='Log out' />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={() => loginModal.onOpen()} lable='Login' />
+                <MenuItem
+                  onClick={() => registerModal.onOpen()}
+                  lable='Signup'
+                />
+              </>
+            )}
           </div>
         </div>
       )}
