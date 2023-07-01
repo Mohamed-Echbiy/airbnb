@@ -57,7 +57,7 @@ export const authOptions: AuthOptions = {
   ],
 
   pages: {
-    signIn: "/",
+    signIn: "http://localhost:3000/",
   },
   debug: process.env.NODE_ENV === "development",
   session: {

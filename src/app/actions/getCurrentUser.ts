@@ -8,7 +8,8 @@ export async function getSession() {
 }
 export default async function getCurrentUser() {
   try {
-    const session = await getSession();
+    const session = await getServerSession(authOptions);
+    console.log(session, "Heloo Helo");
     if (!session?.user?.email) {
       console.log("no user found!");
       return null;
@@ -19,7 +20,7 @@ export default async function getCurrentUser() {
       },
     });
     if (!currentUser) return null;
-    return currentUser;
+    return { ...currentUser };
   } catch (error) {
     console.log(error);
     return null;
